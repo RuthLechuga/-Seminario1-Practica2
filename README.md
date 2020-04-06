@@ -18,7 +18,7 @@ Para registrar un nuevo usuario obligatoriamente se pedirán los siguientes dato
 - **Repetir contraseña**
 
 ## Página principal
-###Publicaciones
+### Publicaciones
 En este apartado el usuario puede crear una publicación, el cual puede contener texto, imagen o ambas.
 
 ### Datos de Perfil
