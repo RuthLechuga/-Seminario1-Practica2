@@ -71,7 +71,53 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', upload.single('photo'), (req, res) => {
+   const datos = req.body;
+   const nombre = datos.nombre;
+   const nickname = datos.nickname;
+   const password = datos.password;
 
+   if(req.file){
+	console.log(req.file.filename);
+
+	var uploadParams = { Bucket: 'usocialg10/FotosUsuario', Key: '', Body: '' };
+    	var file = './uploads/' + req.file.filename;
+
+   	var fileStream = fs.createReadStream(file);
+    	fileStream.on("error", function (err) {
+      		console.log("File Error", err);
+    	});
+
+    	uploadParams.Body = fileStream;
+
+    	var path = require('path');
+    	uploadParams.Key = path.basename(file);
+
+    	s3.upload(uploadParams, function (err, data) {
+      		if (err) {
+        		console.log("Error", err);
+      		} if (data) {
+        		let  sql = `INSERT INTO USER(nombre,nickname,password,url_photo) VALUES ('$(nombre}','${nickname}','${password}','${data.location}');`;
+			let query = conn.query(sql, (err,results) => {
+				if(err){
+					res.send({ 'success': false});
+				} else {
+					res.send({ 'success': true });
+				}
+			});
+      		}
+    	});
+
+   }
+   else {
+	let sql = `INSERT INTO USER(nombre,nickname,password) VALUES ('${nombre}','${nickname}','${password}');`;
+	let query = conn.query(sql, (err,results) => {
+		if (err) {
+            		res.send({ 'success': false });
+        	} else {
+            		res.send({ 'success': true });
+        	}
+	});
+   }
 
 });
