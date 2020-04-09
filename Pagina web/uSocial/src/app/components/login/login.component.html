@@ -7,7 +7,7 @@
         <div class="login-form">
             <div class="sign-in-htm">
                 <div class="group">
-                    <label for="user" class="label">Username</label>
+                    <label for="user" class="label">Nickname</label>
                     <input id="username" type="text" class="input" (keyup)="onKeyUserLogin($event)"> 
                 </div>
                 <div class="group">
@@ -21,7 +21,11 @@
 
             <div class="sign-up-htm">
                 <div class="group">
-                    <label for="user" class="label">Username</label>
+                    <label for="user" class="label">Nombre</label>
+                    <input id="user" type="text" class="input" (keyup)="onKeyNombreRegister($event)">
+                </div>
+                <div class="group">
+                    <label for="user" class="label">Nickname</label>
                     <input id="user" type="text" class="input" (keyup)="onKeyUserRegister($event)">
                 </div>
                 <div class="group">

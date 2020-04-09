@@ -22,9 +22,9 @@
         <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
             <br>
             <div class="profile-picture big-profile-picture clear">
-                <img width="100px" alt="Anne Hathaway picture" src="http://upload.wikimedia.org/wikipedia/commons/e/e1/Anne_Hathaway_Face.jpg" >
+                <img width="100px" alt="Anne Hathaway picture" src="{{photo}}" >
             </div>
-            <h1 class="user-name">Anne Hathaway</h1>
+            <h1 class="user-name">{{nickname}}</h1>
             <div class="profile-description">
                 <div class="join-newsletter block"> <!-- JOIN NEWSLETTER (RIGHT-CONTAINER) -->
                     <div class="input-container">
@@ -38,21 +38,14 @@
             
             </ul>
         </div>
-        <div class="tweets block"> <!-- TWEETS (MIDDLE-CONTAINER) -->
-            <h2 class="titular"><span class="icon zocial-twitter"></span>PUBLICACIONES</h2>
-            <div class="tweet first">
+        <div class="tweets block"  *ngFor="let publicacion of publicaciones">
+            <h2 class="titular"><span class="icon zocial-twitter"></span>{{publicacion.nickname}}</h2>
+            <div class="tweet last">
                 <div class="profile-menu">
-                    <p>Ruth Lechuga</p>
+                    <img *ngIf="publicacion.image_url" width="100px" src="https://www.partesdel.com/wp-content/uploads/globo.jpg">
                 </div>
-                <p>Ice-cream trucks only play music when out of ice-cream. Well played dad. On Ice-cream trucks only play music when out of ice-cream. Well played dad. OnIce-cream trucks only play music when out of ice-cream. Well played dad. On<a class="tweet-link" href="#17">@Quora</a></p>
-            </div>
-            <div class="tweet first">
-                <div class="profile-menu">
-                    <p>Ruth Lechuga</p>
-                </div>
-                <p>Ice-cream trucks only play music when out of ice-cream. Well played dad. On Ice-cream trucks only play music when out of ice-cream. Well played dad. OnIce-cream trucks only play music when out of ice-cream. Well played dad. On<a class="tweet-link" href="#17">@Quora</a></p>
-                <img width="100px" src="https://www.partesdel.com/wp-content/uploads/globo.jpg">
-            </div>
+                <p>{{publicacion.text}}</p>
+            </div>          
         </div> 
     </div>
 </div> <!-- end main-container -->
