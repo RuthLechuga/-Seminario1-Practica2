@@ -121,3 +121,14 @@ app.post('/register', upload.single('photo'), (req, res) => {
    }
 
 });
+
+app.get('/getPublicaciones', (req,res) => {
+	let sql = `SELECT P.text, P.image_url, U.nickname FROM POST P, USER U WHERE P.idUser = U.idUser;`;
+	let query = conn.query(sql, (err,results) => {
+		if(err){
+			res.send([]);
+		} else {
+			res.send(results);
+		}
+	});
+});
