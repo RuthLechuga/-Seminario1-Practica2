@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class UsuarioService {
 
-  url_api = "http://ec2-3-133-135-183.us-east-2.compute.amazonaws.com:3000";
+  url_api = "http://ec2-18-224-70-248.us-east-2.compute.amazonaws.com:3000";
 
   constructor(private httpClient: HttpClient) { }
 

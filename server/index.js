@@ -9,7 +9,7 @@ let AWS = require('aws-sdk');
 const mysql = require('mysql');
 
 const conn = mysql.createPool({
-    host: '3.22.68.1',
+    host: '3.15.145.131',
     user: 'userP2',
     password: 'semi123',
     database: 'bduSocial'
@@ -220,7 +220,6 @@ app.post('/modifyUser', upload.single('photo'), (req, res) => {
             if (err) {
                 console.log("Error", err);
             } if (data) {
-                Update clientes Set nombre='José' Where nombre='Pepe'
                 let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.location}' WHERE idUser=${idUser};`;
             let query = conn.query(sql, (err,results) => {
                 if(err){
