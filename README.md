@@ -64,6 +64,10 @@ A continuación, se detallan un poco mejor los servicios utilizados.
 #### Amazon VPC
 Amazon Virtual Private Cloud (Amazon VPC) permite aprovisionar una sección de la nube de AWS aislada de forma lógica, en la que puede lanzar recursos de AWS en una red virtual que usted defina.
 
+#### Mysql server
+MySQL es un sistema de gestión de base de datos relacional (RDBMS) de código abierto, basado en lenguaje de consulta estructurado (SQL).
+MySQL se ejecuta en prácticamente todas las plataformas, incluyendo Linux, UNIX y Windows.
+
 #### Amazon S3
 Amazon Simple Storage Service (Amazon S3) es un servicio de almacenamiento de objetos que ofrece escalabilidad, disponibilidad de datos, seguridad y rendimiento líderes en el sector. Esto significa que clientes de todos los tamaños y sectores pueden utilizarlo para almacenar y proteger cualquier cantidad de datos para diversos casos de uso, como sitios web, aplicaciones móviles, procesos de copia de seguridad y restauración, operaciones de archivado, aplicaciones empresariales, dispositivos IoT y análisis de big data
 

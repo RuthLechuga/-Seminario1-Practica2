@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "uSocial": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "uSocial"
+    }
+  },
+  "defaultProject": "uSocial",
+  "cli": {
+    "analytics": "4b7477fc-1afd-46d2-9aef-2573b036f6d0"
+  }
 }
