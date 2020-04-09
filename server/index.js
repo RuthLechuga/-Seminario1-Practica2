@@ -60,11 +60,11 @@ app.get('/getUsers', function(re,res){
 
 app.post('/login', (req, res) => {
     const { nickname, password } = req.body;
-    let sql = `SELECT 1 FROM USER WHERE nickname='${nickname}' AND password='${password}'`;
+    let sql = `SELECT idUser FROM USER WHERE nickname='${nickname}' AND password='${password}'`;
     let query = conn.query(sql, (err, results) => {
         if (err) throw err;
         if (results.length === 1) {
-            res.send({ auth: true });
+            res.send({ auth: true, results} );
         } else {
             res.send({ auth: false });
         }
