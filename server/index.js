@@ -146,7 +146,7 @@ app.get('/getPublicaciones', (req,res) => {
 app.post('/setPublicacion', upload.single('photo'), (req, res) => {
    const datos = req.body;
    const idUser = datos.idUser;
-   const texto = datos.texto;
+   const text = datos.text;
 
    if(req.file){
      console.log(req.file.filename);
@@ -168,7 +168,7 @@ app.post('/setPublicacion', upload.single('photo'), (req, res) => {
           if (err) {
             console.log("Error", err);
           } if (data) {
-            let  sql = `INSERT INTO POST(text,image_url,idUser) VALUES ('${texto}','${data.location}',${idUser});`;
+            let  sql = `INSERT INTO POST(text,image_url,idUser) VALUES ('${text}','${data.location}',${idUser});`;
       let query = conn.query(sql, (err,results) => {
         if(err){
           res.send({ 'success': false});
@@ -181,7 +181,7 @@ app.post('/setPublicacion', upload.single('photo'), (req, res) => {
 
    }
    else {
-  let sql = `INSERT INTO POST(text,idUser) VALUES ('${texto}',${idUser});`;
+  let sql = `INSERT INTO POST(text,idUser) VALUES ('${text}',${idUser});`;
   let query = conn.query(sql, (err,results) => {
     if (err) {
                 res.send({ 'success': false });

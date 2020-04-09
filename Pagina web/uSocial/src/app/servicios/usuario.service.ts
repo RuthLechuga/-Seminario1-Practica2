@@ -65,4 +65,37 @@ export class UsuarioService {
     });
   }
 
+
+  postear(idUser, text, photo){
+    var formData: any = new FormData();
+    formData.append("photo", photo);
+    formData.append("idUser", idUser);
+    formData.append("text", text);
+    console.log("datos:",formData);
+
+    const url = `${this.url_api}/setPublicacion`;
+    return new Promise(resolve => {
+      this.httpClient.post(url,formData)
+      .subscribe(resp => {
+        resolve(resp["setPublicacion"]);
+      });
+    });
+  }
+
+  postear_nophoto(idUser, text){
+    var formData: any = new FormData();
+    formData.append("idUser", idUser);
+    formData.append("text", text);
+    console.log("datos:",formData);
+
+    const url = `${this.url_api}/setPublicacion`;
+    return new Promise(resolve => {
+      this.httpClient.post(url,formData)
+      .subscribe(resp => {
+        resolve(resp["setPublicacion"]);
+      });
+    });
+
+  }
+
 }
