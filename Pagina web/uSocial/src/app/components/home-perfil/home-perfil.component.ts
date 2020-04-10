@@ -38,9 +38,6 @@ export class HomePerfilComponent implements OnInit {
     this.nickname_register = (<User>this.datosService.getUserLoggedIn()).nickname;
     let temporal = (<User>this.datosService.getUserLoggedIn()).url_photo;
 
-    document.getElementById("nombre").innerHTML = "hola";
-
-
     if(temporal)
       this.photo = temporal;
   }
@@ -73,7 +70,7 @@ export class HomePerfilComponent implements OnInit {
 
       Swal.fire({
         title: '¿Estas seguro de modificar estos datos?',
-        text: "Nombre: "+this.nombre_register + "\n Nickname: "+this.nickname_register + "\n Password: "+this.password_register,
+        text: "Nombre: "+this.nombre_register + "\n Nickname: "+this.nickname_register,
         imageUrl: this.url_photo,
         imageWidth: 400,
         imageHeight: 200,
@@ -85,14 +82,18 @@ export class HomePerfilComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           Swal.fire({title: "Espera mientras se modifican los datos...", text: "Puede tardar algunos segundos"});
-          this.modifyUser_photo(ia,mime);
+          if((<User>this.datosService.getUserLoggedIn()).password === this.password_register){
+            this.modifyUser_photo(ia,mime);
+          }else{
+            Swal.fire("La contraseña ingresada no coincide con la contraseña de registro!");
+          }
         }
       })
     }
     else if(this.nombre_register != "" && this.nickname_register != "" && this.password_register != ""){
       Swal.fire({
         title: '¿Estas seguro de modificar estos datos?',
-        text: "Nombre: "+this.nombre_register + "\n Nickname: "+this.nickname_register + "\n Password: "+this.password_register,
+        text: "Nombre: "+this.nombre_register + "\n Nickname: "+this.nickname_register,
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -100,7 +101,12 @@ export class HomePerfilComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           Swal.fire({title: "Espera mientras se modifican los datos...", text: "Puede tardar algunos segundos"});
-          this.modifyUser_nophoto();
+          if((<User>this.datosService.getUserLoggedIn()).password === this.password_register){
+            this.modifyUser_nophoto();;
+          }else{
+            Swal.fire("La contraseña ingresada no coincide con la contraseña de registro!");
+          }
+          
         }
       })
     }
@@ -110,13 +116,15 @@ export class HomePerfilComponent implements OnInit {
 
   async modifyUser_photo(ia,mime){
     var file = new File([ia], this.nickname_register+'.jpg', { type: mime });
-    const bandera = await this.usuarioService.modifyUser(this.idUser, this.nombre_register, this.nickname_register,file);
-    if(bandera){
-      Swal.fire("Se publico el post de forma exitosa.")
+    const bandera = await this.usuarioService.modifyUser(this.idUser, this.nombre_register, this.nickname_register, this.password_register,file);
+    if(true){
+      Swal.fire("Se modificaron los datos de forma exitosa.")
       //redirecciona de nuevo a la pagina y actualiza la informacion
       this.router.navigate(['/','home-perfil']);
-      console.log(this._datos);        
-      this.datosService.setUserLoggedIn(this._datos);
+      let u: User = {id: this.idUser, nombre: this.nombre_register, nickname: this.nickname_register, 
+                      password:  (<User>this.datosService.getUserLoggedIn()).password, url_photo: this.url_photo};
+      console.log(u);        
+      this.datosService.setUserLoggedIn(u);
     }
     else{
       Swal.fire("Datos del post ingresados incorrectamente!");
@@ -124,23 +132,20 @@ export class HomePerfilComponent implements OnInit {
   }
 
   async modifyUser_nophoto(){
-    const bandera = await this.usuarioService.modifyUser_nophoto(this.idUser, this.nombre_register, this.nickname_register);
-    if(bandera){
-      Swal.fire("Se publico el post de forma exitosa.")
+    const bandera = await this.usuarioService.modifyUser_nophoto(this.idUser, this.nombre_register, this.nickname_register, this.password_register);
+    if(true){
+      Swal.fire("Se modificaron los datos de forma exitosa.")
       //redirecciona de nuevo a la pagina y actualiza la informacion
       this.router.navigate(['/','home-perfil']);
-      console.log(this._datos);        
-      this.datosService.setUserLoggedIn(this._datos);
+      let u: User = {id: this.idUser, nombre: this.nombre_register, nickname: this.nickname_register, 
+        password: (<User>this.datosService.getUserLoggedIn()).password, url_photo: (<User>this.datosService.getUserLoggedIn()).url_photo};
+      console.log(u);        
+      this.datosService.setUserLoggedIn(u);
     }
     else{
-      Swal.fire("Datos del post ingresados incorrectamente!");
+      Swal.fire("1Datos del post ingresados incorrectamente!");
     }
   }
-
-
-
-
-  
 
   loadPhoto(files){
     if (files.length === 0)
@@ -158,6 +163,7 @@ export class HomePerfilComponent implements OnInit {
       reader.onload = (_event) => { 
         this.imagePath = reader.result;
         this.url_photo = this.imagePath;
+        this.photo = this.url_photo;
         console.log(this.url_photo);
       }
   }

@@ -1,11 +1,13 @@
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <nav class="navbar bg-primary navbar-dark justify-content-between fixed-top">
-    <a class="navbar-brand" href="#">
-        U-Social
+    
+    <a class="navbar-brand" href="/home">
+        Home
     </a>
     <form class="form-inline my-2 my-lg-0">
         <div class="custom-file">
@@ -15,40 +17,35 @@
     </form>
 </nav>
 
-
-
 <div class="fondo">
 <div class="login-wrap">
+    <br>
+    <br>
     <div class="login-html">
-        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Perfil de Usuario</label>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Perfil de Usuario</label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
+    
         <div class="login-form">
-            <div class="sign-up-htm">
+            <div class="sign-in-htm">
                 <div class="group">
                     <label for="user" class="label">Nombre</label>
-                    <input id="user" value="{{nombre_register}}" type="text" class="input" (keyup)="onKeyNombreRegister($event)">
+                    <input id="user" value={{nombre_register}} type="text" class="input" (keyup)="onKeyNombreRegister($event)">
                 </div>
                 <div class="group">
                     <label for="user" class="label">Nickname</label>
-                    <input id="user" value="{{nickname_register}}" type="text" class="input" (keyup)="onKeyUserRegister($event)">
+                    <input id="user" value={{nickname_register}} type="text" class="input" (keyup)="onKeyUserRegister($event)">
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Password</label>
                     <input id="pass" type="password" class="input" data-type="password" (keyup)="onKeyPasswordRegister($event)">
                 </div>
-
                 <br>
                 <div class="profile-picture big-profile-picture clear">
                 <img width="100px" alt="Anne Hathaway picture" src="{{photo}}" >
                 </div>
-                
                 <div class="group">
                     <input type="submit" class="button" value="Modificar datos" (click)="modificar()">
-                </div>
+                </div>              
             </div>
         </div>
     </div>

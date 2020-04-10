@@ -9,7 +9,7 @@ let AWS = require('aws-sdk');
 const mysql = require('mysql');
 
 const conn = mysql.createPool({
-    host: '18.188.6.13',
+    host: '3.15.34.37',
     user: 'userP2',
     password: 'semi123',
     database: 'bduSocial'
@@ -133,7 +133,7 @@ app.post('/register', upload.single('photo'), (req, res) => {
 });
 
 app.get('/getPublicaciones', (req,res) => {
-	let sql = `SELECT P.text, P.image_url, U.nickname FROM POST P, USER U WHERE P.idUser = U.idUser;`;
+	let sql = `SELECT P.text, P.image_url, U.nickname, P.fechahora FROM POST P, USER U WHERE P.idUser = U.idUser ORDER BY fechahora DESC;`;
 	let query = conn.query(sql, (err,results) => {
 		if(err){
 			res.send([]);
@@ -221,7 +221,7 @@ app.post('/modifyUser', upload.single('photo'), (req, res) => {
             if (err) {
                 console.log("Error", err);
             } if (data) {
-                let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.Location}' WHERE idUser=${idUser}; AND password='${password}';`;
+                let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.Location}' WHERE idUser=${idUser} AND password='${password}';`;
             let query = conn.query(sql, (err,results) => {
                 if(err){
                     res.send({ 'success': false});

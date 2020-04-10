@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class UsuarioService {
 
-  url_api = "http://ec2-18-216-95-69.us-east-2.compute.amazonaws.com:3000";
+  url_api = "http://ec2-13-59-41-182.us-east-2.compute.amazonaws.com:3000";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -126,12 +126,13 @@ export class UsuarioService {
     modifyUser -> sirve para modificar a un usuario en especifico, identificado por su id
                   Nota: con este metodo modifica la foto de perfil
   */
- modifyUser(idUser, nombre, nickname, photo){
+ modifyUser(idUser, nombre, nickname, password, photo){
   var formData: any = new FormData();
   formData.append("photo", photo);
   formData.append("idUser", idUser);
   formData.append("nombre", nombre);
   formData.append("nickname", nickname);
+  formData.append("password", password);
   console.log("datos:",formData);
 
   const url = `${this.url_api}/modifyUser`;
@@ -146,11 +147,12 @@ export class UsuarioService {
  /*
     modifyUser -> sirve para modificar a un usuario en especifico, identificado por su id
   */
- modifyUser_nophoto(idUser, nombre, nickname){
+ modifyUser_nophoto(idUser, nombre, nickname, password){
   var formData: any = new FormData();
   formData.append("idUser", idUser);
   formData.append("nombre", nombre);
   formData.append("nickname", nickname);
+  formData.append("password", password);
   console.log("datos:",formData);
 
   const url = `${this.url_api}/modifyUser`;
