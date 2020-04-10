@@ -9,7 +9,7 @@ let AWS = require('aws-sdk');
 const mysql = require('mysql');
 
 const conn = mysql.createPool({
-    host: '3.22.68.1',
+    host: '3.15.145.131',
     user: 'userP2',
     password: 'semi123',
     database: 'bduSocial'
