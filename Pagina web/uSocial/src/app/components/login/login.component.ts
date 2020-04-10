@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   @ViewChild('canvas', { static: true }) canvas: ElementRef;
   public imagePath;
-  imgURL: any;
+  imgURL: any = '';
   public message: string;
 
   constructor(public usuarioService: UsuarioService,
@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Loguin'
+        confirmButtonText: 'Registrar'
       }).then((result) => {
         if (result.value) {
           Swal.fire({title: "Espera mientras procesamos la información...", text: "Puede tardar algunos segundos"});
@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Loguin'
+        confirmButtonText: 'Registrar'
       }).then((result) => {
         if (result.value) {
           Swal.fire({title: "Espera mientras procesamos la información...", text: "Puede tardar algunos segundos"});

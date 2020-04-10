@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class UsuarioService {
 
-  url_api = "http://ec2-18-222-22-164.us-east-2.compute.amazonaws.com:3000";
+  url_api = "http://ec2-18-216-95-69.us-east-2.compute.amazonaws.com:3000";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class UsuarioService {
     return new Promise(resolve => {
       this.httpClient.post(url,formData)
       .subscribe(resp => {
-        resolve(resp["register"]);
+        resolve(resp["success"]);
       });
     });
   }
@@ -38,7 +38,7 @@ export class UsuarioService {
     return new Promise(resolve => {
       this.httpClient.post(url,formData)
       .subscribe(resp => {
-        resolve(resp["register"]);
+        resolve(resp["success"]);
       });
     });
 
