@@ -38,6 +38,9 @@ export class HomePerfilComponent implements OnInit {
     this.nickname_register = (<User>this.datosService.getUserLoggedIn()).nickname;
     let temporal = (<User>this.datosService.getUserLoggedIn()).url_photo;
 
+    document.getElementById("nombre").innerHTML = "hola";
+
+
     if(temporal)
       this.photo = temporal;
   }

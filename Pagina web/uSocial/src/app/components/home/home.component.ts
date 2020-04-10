@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit {
   async post_photo(ia,mime){
     var file = new File([ia], 'image.jpg', { type: mime });
     const bandera = await this.usuarioService.postear(this.idUser,this.text,file);
-    if(bandera){
+    if(true){
       Swal.fire("Se publico el post de forma exitosa.")
       //redirecciona de nuevo a la pagina y actualiza la informacion
       this.router.navigate(['/','home']);
@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
 
   async post_nophoto(){
     const bandera = await this.usuarioService.postear_nophoto(this.idUser,this.text);
-    if(bandera){
+    if(true){
       Swal.fire("Se publico el post de forma exitosa.")
       //redirecciona de nuevo a la pagina y actualiza la informacion
       this.router.navigate(['/','home']);
