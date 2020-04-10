@@ -45,7 +45,7 @@
         </div>
         <div class="tweets block"  *ngFor="let publicacion of publicaciones">
             <h2 class="titular"><span class="icon zocial-twitter"></span>{{publicacion.nickname}}</h2>
-            <h2 class="titular"><span class="icon zocial-twitter"></span>{{publicacion.fechahora}}</h2>
+            <font color='white'>{{publicacion.fechahora}}</font>>
             <div class="tweet last">
                 <div class="profile-menu">
                     <img *ngIf="publicacion.image_url" width="100px" src={{publicacion.image_url}}>
