@@ -36,10 +36,10 @@
                 <div class="group">
                     <div class="d-flex flex-column align-items-center">
                         <div>
-                            <canvas #canvas class="vid"></canvas>
+                            <img src="{{imgURL}}" height="200px">
                         </div>
                         <div class="pb-2">
-                            <input type="submit" class="button" value="Subir foto" (click)="subirFoto()">
+                            <input #file type="file" class="button" value="Subir foto" id="customFile" accept='image/*' (change)="subirFoto(file.files)">
                         </div>
                     </div>
                 </div>
