@@ -11,7 +11,7 @@
         <div class="profile-menu-right">
             <ul class="header-menu horizontal-list">
                 <li>
-                    <a class="header-menu-tab" href="#2"><span class="icon fontawesome-user"></span>Account</a>
+                    <a class="header-menu-tab" routerLink="/home/perfil"><span class="icon fontawesome-user"></span>Account</a>
                 </li>
             </ul>
         </div>
@@ -28,10 +28,15 @@
             <div class="profile-description">
                 <div class="join-newsletter block"> <!-- JOIN NEWSLETTER (RIGHT-CONTAINER) -->
                     <div class="input-container">
-                        <textarea class="email text-input" name="someName" cols="20" rows="6"></textarea>
-                        <div class="input-icon envelope-icon-newsletter"><button><span class="icon entypo-camera"></span> </button></div>
+                        <textarea class="email text-input" name="someName" cols="20" rows="6" (keyup)="onKeyTextPost($event)"></textarea>
+                        <div class="custom-file">
+                            <label class="custom-file-label" for="customFile" style="background-color:rgb(193,32,32); color: blanchedalmond;">Subir foto</label>
+                            <input #file type="file" class="custom-file-input" id="customFile" accept='image/*' (change)="loadPhoto(file.files)">
+                        </div>
+                        
+                        
                     </div>
-                    <a class="subscribe button" href="#21">Publicar</a>
+                    <input type="submit" class="subscribe button" value="Publicar" (click)="publicar()">
                 </div>
             </div>
             <ul class="profile-options horizontal-list">
