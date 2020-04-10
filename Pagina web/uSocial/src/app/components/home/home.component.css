@@ -394,7 +394,7 @@ transition: background .3s;
 	border-top: 4px solid #e64c65;
 }
 .tweets {
-height: 375px;
+height: 150px;
 }
 .tweets .titular {
 background: #35aadc;
@@ -492,4 +492,8 @@ width: 60px;
 background: #11a8ab;
 border: 0px;
 border-radius: 5px;
+}
+
+img{
+padding-top: 10px;
 }

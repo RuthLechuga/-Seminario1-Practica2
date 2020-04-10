@@ -58,6 +58,16 @@ app.get('/getUsers', function(re,res){
     });
 });
 
+app.get('/getUser', function(re,res){
+    const datos = req.body;
+    const idUser = datos.idUser;
+    let sql = `SELECT * FROM USER WHERE idUser=${idUser}`;
+    let query = conn.query(sql, (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+});
+
 app.post('/login', (req, res) => {
     const { nickname, password } = req.body;
     let sql = `SELECT * FROM USER WHERE nickname='${nickname}' AND password='${password}'`;
@@ -97,7 +107,7 @@ app.post('/register', upload.single('photo'), (req, res) => {
       		if (err) {
         		console.log("Error", err);
       		} if (data) {
-        		let  sql = `INSERT INTO USER(nombre,nickname,password,url_photo) VALUES ('$(nombre}','${nickname}','${password}','${data.location}');`;
+        		let  sql = `INSERT INTO USER(nombre,nickname,password,url_photo) VALUES ('${nombre}','${nickname}','${password}','${data.location}');`;
 			let query = conn.query(sql, (err,results) => {
 				if(err){
 					res.send({ 'success': false});
@@ -131,4 +141,107 @@ app.get('/getPublicaciones', (req,res) => {
 			res.send(results);
 		}
 	});
+});
+
+app.post('/setPublicacion', upload.single('photo'), (req, res) => {
+   const datos = req.body;
+   const idUser = datos.idUser;
+   const text = datos.text;
+
+   if(req.file){
+     console.log(req.file.filename);
+
+     var uploadParams = { Bucket: 'usocialg10/FotosPublicacion', Key: '', Body: '' };
+     var file = './uploads/' + req.file.filename;
+
+      var fileStream = fs.createReadStream(file);
+       fileStream.on("error", function (err) {
+        console.log("File Error", err);
+      });
+
+      uploadParams.Body = fileStream;
+
+      var path = require('path');
+      uploadParams.Key = path.basename(file);
+
+      s3.upload(uploadParams, function (err, data) {
+          if (err) {
+            console.log("Error", err);
+          } if (data) {
+            let  sql = `INSERT INTO POST(text,image_url,idUser) VALUES ('${text}','${data.location}',${idUser});`;
+      let query = conn.query(sql, (err,results) => {
+        if(err){
+          res.send({ 'success': false});
+        } else {
+          res.send({ 'success': true });
+        }
+      });
+          }
+      });
+
+   }
+   else {
+  let sql = `INSERT INTO POST(text,idUser) VALUES ('${text}',${idUser});`;
+  let query = conn.query(sql, (err,results) => {
+    if (err) {
+                res.send({ 'success': false });
+          } else {
+                res.send({ 'success': true });
+          }
+  });
+   }
+
+});
+
+
+app.post('/modifyUser', upload.single('photo'), (req, res) => {
+   const datos = req.body;
+   const idUser = datos.idUser;
+   const nombre = datos.nombre;
+   const nickname = datos.nickname;
+   const password = datos.password;
+
+   if(req.file){
+    console.log(req.file.filename);
+
+    var uploadParams = { Bucket: 'usocialg10/FotosUsuario', Key: '', Body: '' };
+        var file = './uploads/' + req.file.filename;
+
+    var fileStream = fs.createReadStream(file);
+        fileStream.on("error", function (err) {
+            console.log("File Error", err);
+        });
+
+        uploadParams.Body = fileStream;
+
+        var path = require('path');
+        uploadParams.Key = path.basename(file);
+
+        s3.upload(uploadParams, function (err, data) {
+            if (err) {
+                console.log("Error", err);
+            } if (data) {
+                let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.location}' WHERE idUser=${idUser}; AND password='${password}';`;
+            let query = conn.query(sql, (err,results) => {
+                if(err){
+                    res.send({ 'success': false});
+                } else {
+                    res.send({ 'success': true });
+                }
+            });
+            }
+        });
+
+   }
+   else {
+    let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}' WHERE idUser=${idUser} AND password='${password}';`;
+    let query = conn.query(sql, (err,results) => {
+        if (err) {
+                    res.send({ 'success': false });
+            } else {
+                    res.send({ 'success': true });
+            }
+    });
+   }
+
 });
