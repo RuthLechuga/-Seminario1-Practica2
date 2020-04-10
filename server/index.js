@@ -9,7 +9,7 @@ let AWS = require('aws-sdk');
 const mysql = require('mysql');
 
 const conn = mysql.createPool({
-    host: '3.15.145.131',
+    host: '3.135.246.151',
     user: 'userP2',
     password: 'semi123',
     database: 'bduSocial'
@@ -107,7 +107,7 @@ app.post('/register', upload.single('photo'), (req, res) => {
       		if (err) {
         		console.log("Error", err);
       		} if (data) {
-        		let  sql = `INSERT INTO USER(nombre,nickname,password,url_photo) VALUES ('${nombre}','${nickname}','${password}','${data.location}');`;
+        		let  sql = `INSERT INTO USER(nombre,nickname,password,url_photo) VALUES ('${nombre}','${nickname}','${password}','${data.Location}');`;
 			let query = conn.query(sql, (err,results) => {
 				if(err){
 					res.send({ 'success': false});
@@ -168,7 +168,7 @@ app.post('/setPublicacion', upload.single('photo'), (req, res) => {
           if (err) {
             console.log("Error", err);
           } if (data) {
-            let  sql = `INSERT INTO POST(text,image_url,idUser) VALUES ('${text}','${data.location}',${idUser});`;
+            let  sql = `INSERT INTO POST(text,image_url,idUser) VALUES ('${text}','${data.Location}',${idUser});`;
       let query = conn.query(sql, (err,results) => {
         if(err){
           res.send({ 'success': false});
@@ -221,7 +221,7 @@ app.post('/modifyUser', upload.single('photo'), (req, res) => {
             if (err) {
                 console.log("Error", err);
             } if (data) {
-                let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.location}' WHERE idUser=${idUser}; AND password='${password}';`;
+                let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.Location}' WHERE idUser=${idUser}; AND password='${password}';`;
             let query = conn.query(sql, (err,results) => {
                 if(err){
                     res.send({ 'success': false});
