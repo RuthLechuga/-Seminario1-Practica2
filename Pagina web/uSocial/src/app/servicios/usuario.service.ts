@@ -66,6 +66,9 @@ export class UsuarioService {
   }
 
 
+  /*
+    postear -> sirve para agregar un nuevo post con photo y texto
+  */
   postear(idUser, text, photo){
     var formData: any = new FormData();
     formData.append("photo", photo);
@@ -82,6 +85,9 @@ export class UsuarioService {
     });
   }
 
+  /*
+    postear_nophoto -> sirve para agregar un nuevo post con solo texto
+  */
   postear_nophoto(idUser, text){
     var formData: any = new FormData();
     formData.append("idUser", idUser);
@@ -97,5 +103,63 @@ export class UsuarioService {
     });
 
   }
+
+  /*
+    getUser -> sirve para obtener todos los datos del Usuario para mostrarlos en el perfil
+    datos -> (idUser, nombre, nickname, password, url_photo)
+  */
+ getUser(idUser){
+  var formData: any = new FormData();
+  formData.append("idUser", idUser);
+  console.log("datos:",formData);
+
+  const url = `${this.url_api}/getUser`;
+  return new Promise(resolve => {
+    this.httpClient.get(url,formData)
+    .subscribe(resp => {
+      resolve(resp);
+    });
+  });
+ }
+
+ /*
+    modifyUser -> sirve para modificar a un usuario en especifico, identificado por su id
+                  Nota: con este metodo modifica la foto de perfil
+  */
+ modifyUser(idUser, nombre, nickname, photo){
+  var formData: any = new FormData();
+  formData.append("photo", photo);
+  formData.append("idUser", idUser);
+  formData.append("nombre", nombre);
+  formData.append("nickname", nickname);
+  console.log("datos:",formData);
+
+  const url = `${this.url_api}/modifyUser`;
+  return new Promise(resolve => {
+    this.httpClient.post(url,formData)
+    .subscribe(resp => {
+      resolve(resp["modifyUser"]);
+    });
+  });
+ }
+
+ /*
+    modifyUser -> sirve para modificar a un usuario en especifico, identificado por su id
+  */
+ modifyUser_nophoto(idUser, nombre, nickname){
+  var formData: any = new FormData();
+  formData.append("idUser", idUser);
+  formData.append("nombre", nombre);
+  formData.append("nickname", nickname);
+  console.log("datos:",formData);
+
+  const url = `${this.url_api}/modifyUser`;
+  return new Promise(resolve => {
+    this.httpClient.post(url,formData)
+    .subscribe(resp => {
+      resolve(resp["modifyUser"]);
+    });
+  });
+ }
 
 }

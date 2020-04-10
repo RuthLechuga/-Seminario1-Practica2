@@ -1,31 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user.model';
-import { DatoslocalesService } from 'src/app/servicios/datoslocales.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
-
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { User } from 'src/app/models/user.model';
+import { DatoslocalesService } from 'src/app/servicios/datoslocales.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-home-perfil',
+  templateUrl: './home-perfil.component.html',
+  styleUrls: ['./home-perfil.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomePerfilComponent implements OnInit {
 
-  nickname='desconocido';
   photo='../../../assets/no_photo.png';
-  publicaciones;
 
-  //Datos para la publicacion
   idUser: string = '';
+  nombre_register: string = '';
+  nickname_register: string = '';
+  password_register: string = '';
   url_photo: string = '';
-  text: string = '';
 
+  
   public imagePath;
   public message: string;
-
-
   //Guardan todos los datos del usuario
   _datos;
 
@@ -37,28 +34,30 @@ export class HomeComponent implements OnInit {
     this._datos = (<User>this.datosService.getUserLoggedIn());
     this.idUser = (<User>this.datosService.getUserLoggedIn()).id;
 
-    this.nickname = (<User>this.datosService.getUserLoggedIn()).nickname;
+    this.nombre_register = (<User>this.datosService.getUserLoggedIn()).nombre;
+    this.nickname_register = (<User>this.datosService.getUserLoggedIn()).nickname;
     let temporal = (<User>this.datosService.getUserLoggedIn()).url_photo;
 
     if(temporal)
       this.photo = temporal;
-
-    this.cargarPublicaciones();
-  }
-
-  async cargarPublicaciones(){
-    this.publicaciones = await this.usuarioService.getPublicaciones();
-    console.log(this.publicaciones);
   }
 
   //-------------------------------------------------OBTENER DATOS-------------------------------------------//
-  onKeyTextPost(event){
-    this.text = event.target.value;
+  onKeyUserRegister(event){
+    this.nickname_register = event.target.value;
+  }
+
+  onKeyPasswordRegister(event){
+    this.password_register = event.target.value;
+  }
+
+  onKeyNombreRegister(event){
+    this.nombre_register = event.target.value;
   }
 
   //---------------------------------------------------FUNCIONES---------------------------------------------//
-  async publicar(){
-    if(this.url_photo != "" && this.text != ""){
+  async modificar(){
+    if(this.url_photo != "" && this.nombre_register != "" && this.nickname_register != "" && this.password_register != ""){
       var bytes = this.url_photo.split(',')[0].indexOf('base64') >= 0 ?
       atob(this.url_photo.split(',')[1]) :
       (<any>window).unescape(this.url_photo.split(',')[1]);
@@ -70,8 +69,8 @@ export class HomeComponent implements OnInit {
       }
 
       Swal.fire({
-        title: '¿Estas seguro de publicar este post?',
-        text: "Texto: "+this.text,
+        title: '¿Estas seguro de modificar estos datos?',
+        text: "Nombre: "+this.nombre_register + "\n Nickname: "+this.nickname_register + "\n Password: "+this.password_register,
         imageUrl: this.url_photo,
         imageWidth: 400,
         imageHeight: 200,
@@ -82,37 +81,37 @@ export class HomeComponent implements OnInit {
         confirmButtonText: 'Si, estoy seguro'
       }).then((result) => {
         if (result.value) {
-          Swal.fire({title: "Espera mientras se publica el post...", text: "Puede tardar algunos segundos"});
-          this.post_photo(ia,mime);
+          Swal.fire({title: "Espera mientras se modifican los datos...", text: "Puede tardar algunos segundos"});
+          this.modifyUser_photo(ia,mime);
         }
       })
     }
-    else if(this.text != ""){
+    else if(this.nombre_register != "" && this.nickname_register != "" && this.password_register != ""){
       Swal.fire({
-        title: '¿Estas seguro de publicar este post?',
-        text: "Texto: "+this.text,
+        title: '¿Estas seguro de modificar estos datos?',
+        text: "Nombre: "+this.nombre_register + "\n Nickname: "+this.nickname_register + "\n Password: "+this.password_register,
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, estoy seguro'
       }).then((result) => {
         if (result.value) {
-          Swal.fire({title: "Espera mientras se publica el post...", text: "Puede tardar algunos segundos"});
-          this.post_nophoto();
+          Swal.fire({title: "Espera mientras se modifican los datos...", text: "Puede tardar algunos segundos"});
+          this.modifyUser_nophoto();
         }
       })
     }
     else
-      Swal.fire("Datos insuficientes para realizar el post!");
+      Swal.fire("Datos insuficientes para realizar la modificación!");
   }
 
-  async post_photo(ia,mime){
-    var file = new File([ia], 'image.jpg', { type: mime });
-    const bandera = await this.usuarioService.postear(this.idUser,this.text,file);
+  async modifyUser_photo(ia,mime){
+    var file = new File([ia], this.nickname_register+'.jpg', { type: mime });
+    const bandera = await this.usuarioService.modifyUser(this.idUser, this.nombre_register, this.nickname_register,file);
     if(bandera){
       Swal.fire("Se publico el post de forma exitosa.")
       //redirecciona de nuevo a la pagina y actualiza la informacion
-      this.router.navigate(['/','home']);
+      this.router.navigate(['/','home-perfil']);
       console.log(this._datos);        
       this.datosService.setUserLoggedIn(this._datos);
     }
@@ -121,12 +120,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async post_nophoto(){
-    const bandera = await this.usuarioService.postear_nophoto(this.idUser,this.text);
+  async modifyUser_nophoto(){
+    const bandera = await this.usuarioService.modifyUser_nophoto(this.idUser, this.nombre_register, this.nickname_register);
     if(bandera){
       Swal.fire("Se publico el post de forma exitosa.")
       //redirecciona de nuevo a la pagina y actualiza la informacion
-      this.router.navigate(['/','home']);
+      this.router.navigate(['/','home-perfil']);
       console.log(this._datos);        
       this.datosService.setUserLoggedIn(this._datos);
     }
@@ -134,6 +133,11 @@ export class HomeComponent implements OnInit {
       Swal.fire("Datos del post ingresados incorrectamente!");
     }
   }
+
+
+
+
+  
 
   loadPhoto(files){
     if (files.length === 0)
@@ -154,6 +158,5 @@ export class HomeComponent implements OnInit {
         console.log(this.url_photo);
       }
   }
-
 
 }

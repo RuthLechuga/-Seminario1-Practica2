@@ -199,6 +199,7 @@ app.post('/modifyUser', upload.single('photo'), (req, res) => {
    const idUser = datos.idUser;
    const nombre = datos.nombre;
    const nickname = datos.nickname;
+   const password = datos.password;
 
    if(req.file){
     console.log(req.file.filename);
@@ -220,7 +221,7 @@ app.post('/modifyUser', upload.single('photo'), (req, res) => {
             if (err) {
                 console.log("Error", err);
             } if (data) {
-                let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.location}' WHERE idUser=${idUser};`;
+                let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}', url_photo='${data.location}' WHERE idUser=${idUser}; AND password='${password}';`;
             let query = conn.query(sql, (err,results) => {
                 if(err){
                     res.send({ 'success': false});
@@ -233,7 +234,7 @@ app.post('/modifyUser', upload.single('photo'), (req, res) => {
 
    }
    else {
-    let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}' WHERE idUser=${idUser};`;
+    let  sql = `UPDATE USER SET nombre='${nombre}', nickname='${nickname}' WHERE idUser=${idUser} AND password='${password}';`;
     let query = conn.query(sql, (err,results) => {
         if (err) {
                     res.send({ 'success': false });
