@@ -21,20 +21,20 @@
 <div class="login-wrap">
     <div class="login-html">
         <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Perfil de Usuario</label>
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
         <div class="login-form">
             <div class="sign-up-htm">
                 <div class="group">
-                    <label for="user" class="label" value="{{nombre_register}}">Nombre</label>
-                    <input id="user" type="text" class="input" (keyup)="onKeyNombreRegister($event)">
+                    <label for="user" class="label">Nombre</label>
+                    <input id="user" value="{{nombre_register}}" type="text" class="input" (keyup)="onKeyNombreRegister($event)">
                 </div>
                 <div class="group">
-                    <label for="user" class="label" value="{{nickname_register}}">Nickname</label>
-                    <input id="user" type="text" class="input" (keyup)="onKeyUserRegister($event)">
+                    <label for="user" class="label">Nickname</label>
+                    <input id="user" value="{{nickname_register}}" type="text" class="input" (keyup)="onKeyUserRegister($event)">
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Password</label>
